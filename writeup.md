@@ -39,16 +39,17 @@ The code for this step is contained in the first code cell of the IPython notebo
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
-’‘’
+```
     cars_files = glob.glob('./data/vehicles/*/*.png')
     notcars_files = glob.glob('./data/non-vehicles/*/*.png')
 
 
-‘’‘
+```
 
 ![alt text][image1]
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
+I use the following parametes:
 
 Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
@@ -57,11 +58,25 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
-I tried various combinations of parameters and...
-
+I tried various combinations of parameters and 	fianlly choose the following parameters
+```
+    colorspace='YCrCb'
+    hog_channel = 'ALL'
+    spatial = 32
+    histbin = 32
+    orient=9
+    pix_per_cell = 8
+    cell_per_block = 2
+```
 ####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using...
+I trained a linear SVM using through the following steps:
+ - read data of cars and notcars
+ - extract color features and hog features
+ - use standardscaler to standarize features
+ - use linearSVC to train model
+ - test svc
+ - return svc and x_scaler
 
 ###Sliding Window Search
 
@@ -108,5 +123,5 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+In this project, we use SVM to classify object in video and it works well to classify car and no-car only. In actually case, there are more objects in roads. We can  But it is not efficienct enough and in the future we can use faster-cnn to do object detction in future or next project.
 
